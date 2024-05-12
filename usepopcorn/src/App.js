@@ -50,12 +50,12 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-export function NavBar({ movies }) {
+// use component composition here!!
+export function NavBar({ children }) {
   return (
     <nav className="nav-bar">
       <Logo />
-      <Search />
-      <NumResults movies={movies} />
+      {children}
     </nav>
   );
 }
@@ -90,13 +90,9 @@ function NumResults({ movies }) {
   );
 }
 
-export function Main({ movies }) {
-  return (
-    <main className="main">
-      <ListBox movies={movies} />
-      <WatchedBox />
-    </main>
-  );
+// use component composition here!!
+export function Main({ children }) {
+  return <main className="main">{children}</main>;
 }
 
 function ListBox({ movies }) {
@@ -230,8 +226,14 @@ export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   return (
     <>
-      <NavBar movies={movies} />
-      <Main movies={movies} />
+      <NavBar>
+        <Search />
+        <NumResults movies={movies} />
+      </NavBar>
+      <Main>
+        <ListBox movies={movies} />
+        <WatchedBox />
+      </Main>
     </>
   );
 }
