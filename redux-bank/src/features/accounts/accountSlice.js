@@ -55,14 +55,17 @@ export function deposit(amount, currency) {
 
   // return an asynch function before dispatch anything to the store
   return async function (dispatch, getState) {
+    // set isloading to True
     dispatch({ type: "account/convertingCurrency" });
 
+    // API Call
     const res = await fetch(
       `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
     );
     const data = await res.json();
     const converted = data.rates.USD;
 
+    // return action
     dispatch({ type: "account/deposit", payload: converted });
   };
 }
