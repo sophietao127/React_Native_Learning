@@ -22,6 +22,7 @@ function AccountOperations() {
   function handleDeposit() {
     if (!depositAmount) return;
 
+    // also pass currency for API call
     dispatch(deposit(depositAmount, currency));
     setDepositAmount("");
     setCurrency("USD");

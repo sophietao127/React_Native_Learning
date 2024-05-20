@@ -1,3 +1,4 @@
+// includes all redux logics
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -7,6 +8,8 @@ const initialState = {
   isLoading: false,
 };
 
+// collects all state related to account
+// action creaters
 const accountSlice = createSlice({
   name: "account",
   initialState,
@@ -46,9 +49,11 @@ const accountSlice = createSlice({
 
 export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
 
+// action creaters, use thunk
 export function deposit(amount, currency) {
   if (currency === "USD") return { type: "account/deposit", payload: amount };
 
+  // return an asynch function before dispatch anything to the store
   return async function (dispatch, getState) {
     dispatch({ type: "account/convertingCurrency" });
 
